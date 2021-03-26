@@ -1,20 +1,14 @@
 <template>
-	<div class="counter">
-		<h1 v-html="value" />
-		<button
-			@click.prevent="increment()"
-			v-html="'Increment'"
-			style="font-size: 1.25em"
-		/>
-	</div>
+    <canvas ref="canvas" width="800" height="800" style="border:1px solid #d3d3d3;">
+    Your browser does not support the HTML canvas tag.</canvas>
 </template>
 
 <script>
 export default {
-	name: 'Counter',
+	name: 'Chess',
 	data() {
 		return {
-			value: 0
+			
 		}
 	},
 	methods: {
@@ -25,6 +19,7 @@ export default {
 			this.$socket.client.emit('increment_counter')
 		}
 	},
+
 	sockets: {
 		/*
 		 * 👂 Listen to socket events emitted from the socket server
@@ -37,14 +32,5 @@ export default {
 </script>
 
 <style scoped>
-.counter {
-	width: 100%;
-	margin-top: 32px;
-	padding-top: 32px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	border-top: 1px solid rgba(0, 0, 0, 0.1);
-}
+
 </style>
