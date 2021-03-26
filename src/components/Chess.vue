@@ -28,7 +28,7 @@ export default {
 		},
 
 		/**
-		 * Draws board
+		 * Draws chess board.
 		 */
 		drawBoard() {
 			let alternator = 0;
@@ -57,5 +57,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>
