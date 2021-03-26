@@ -8,8 +8,16 @@ export default {
 	name: 'Chess',
 	data() {
 		return {
-			
+			// Chess board colors, should be flexible, add support for more colors later
+			colors: ["#8CE78C", "#FFFFFF"],
+			squareSize: null,
+			ctx: null
 		}
+	},
+	mounted() {
+		this.ctx = this.$refs.canvas.getContext("2d");
+		this.squareSize = this.$refs.canvas.width / 8;
+		this.drawBoard();
 	},
 	methods: {
 		/*
@@ -17,6 +25,23 @@ export default {
 		 */
 		increment() {
 			this.$socket.client.emit('increment_counter')
+		},
+
+		/**
+		 * Draws board
+		 */
+		drawBoard() {
+			let alternator = 0;
+
+			for (let x = 0; x < 8; x++) {
+				for (let y = 0; y < 8; y++) {
+					this.ctx.fillStyle = this.colors[alternator];
+					alternator = (alternator == 0 ? 1 : 0);
+					
+					this.ctx.fillRect(x*this.squareSize, y*this.squareSize, this.squareSize, this.squareSize);
+				}
+				alternator = (alternator == 0 ? 1 : 0);
+			}
 		}
 	},
 
