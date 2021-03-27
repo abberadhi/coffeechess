@@ -1,6 +1,8 @@
+import Piece from './Piece'
+
 class Queen extends Piece {
   canMove(x, y) {
-    return false;
+    return x, y;
   }
 
   canTake() {
@@ -8,6 +10,8 @@ class Queen extends Piece {
   }
 
   move(x, y) {
-    return false;
+    return x, y;
   }
 }
+
+export default Queen;

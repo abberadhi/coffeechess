@@ -1,6 +1,8 @@
+import Piece from './Piece'
+
 class Bishop extends Piece {
   canMove(x, y) {
-    return false;
+    return x, y;
   }
 
   canTake() {
@@ -8,7 +10,8 @@ class Bishop extends Piece {
   }
 
   move(x, y) {
-    this.hasMoved = true;
-    return false;
+    return x, y;
   }
 }
+
+export default Bishop;
