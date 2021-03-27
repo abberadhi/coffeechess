@@ -18,17 +18,9 @@ export default {
 		}
 	},
 	created() {
-
 	},
 	mounted() {
-		// this below should be a separate init() function
-		this.ctx = this.$refs.canvas.getContext("2d");
-		this.squareSize = this.$refs.canvas.width / 8;
-		this.game = new Chess();
-		this.game.createStartPieces()
-		this.drawBoard();
-		// setTimeout(this.drawPieces, 100)
-		this.drawPieces();
+		this.init();
 	},
 	methods: {
 		/*
@@ -36,6 +28,17 @@ export default {
 		 */
 		increment() {
 			this.$socket.client.emit('increment_counter')
+		},
+
+		init() {
+			this.game = new Chess();
+			this.ctx = this.$refs.canvas.getContext("2d");
+			this.squareSize = this.$refs.canvas.width / 8;
+
+			console.log(this.ctx);
+			this.game.createStartPieces()
+			this.drawBoard();
+			this.drawPieces();
 		},
 
 		/**
@@ -61,13 +64,8 @@ export default {
 		drawPieces() {
 			let gamePieces = this.game.getAllPieces();
 
-			/**
-			 * FIX THIS
-			 * error on line 70, this.ctx is undefined
-			 * solve with promise mby
-			 */
 			for (let i = 0; i < gamePieces.length; i++) {
-				gamePieces[i].base_image.onload = function() {
+				gamePieces[i].base_image.onload = (function() {
 					this.ctx.drawImage(
 						gamePieces[i].base_image, 
 						(gamePieces[i].posX*this.squareSize), 
@@ -75,15 +73,8 @@ export default {
 						100,
 						100
 					);
-				}
-				
-				this.ctx.drawImage(
-					gamePieces[i].base_image, 
-					(gamePieces[i].posX*this.squareSize) + (gamePieces[i].base_image.naturalHeight/2/2/2/2), 
-					gamePieces[i].posY*this.squareSize + (gamePieces[i].base_image.naturalWidth/2/2/2/2),
-					gamePieces[i].base_image.naturalWidth*1.5,
-					gamePieces[i].base_image.naturalHeight*1.5,
-				);
+				}).bind(this)
+
 			}
 		}
 	},
