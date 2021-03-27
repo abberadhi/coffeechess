@@ -88,6 +88,7 @@ class Chess {
 
         if (pieceOnSquare) {
             // check if player can take
+            console.log("canTake", piece.canTake(pieceOnSquare.piece, x, y));
             if (piece.canTake(pieceOnSquare.piece, x, y)) {
                 piece.move(x, y, true);
 

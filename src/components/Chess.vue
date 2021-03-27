@@ -120,24 +120,6 @@ export default {
 				this.game.selected = null;
 				this.reDraw();
 			}
-
-
-
-			// let piece = this.game.getPieceBySquare(sX, sY).piece;1
-
-			// if (this.game.selected) {
-			// 	if (this.game.selected.side != this.game.turn) return;
-			// 	this.game.initiateMove(this.game.selected, sX, sY);
-			// 	this.game.selected = null;
-			// }
-
-			// this.game.selected = piece;
-
-			// this.reDraw();
-
-			// if (piece) {
-			// 	this.highlightSquare(this.game.selected);
-			// }
 		},
 
 		/**
