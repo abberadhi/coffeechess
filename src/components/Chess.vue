@@ -40,7 +40,6 @@ export default {
 			this.ctx = this.$refs.canvas.getContext("2d");
 			this.squareSize = this.$refs.canvas.width / 8;
 
-			console.log(this.ctx);
 			this.game.createStartPieces()
 			this.drawBoard();
 			this.drawPieces();
@@ -62,7 +61,6 @@ export default {
 				}
 				alternator = (alternator == 0 ? 1 : 0);
 			}
-			console.log("board draw");
 		},
 
 		/**
@@ -70,7 +68,6 @@ export default {
 		 */
 		drawPieces() {
 			let gamePieces = this.game.getAllPieces();
-			console.log("gamePieces", gamePieces)
 			for (let i = 0; i < gamePieces.length; i++) {
 				gamePieces[i].base_image.onload = (function() {
 					this.ctx.drawImage(
@@ -90,7 +87,6 @@ export default {
 					this.squareSize
 				);
 			}
-			console.log("pieces draw");
 			// this.drawPieces();
 		},
 
@@ -100,27 +96,22 @@ export default {
 			this.drawPieces();
 		},
 
+		/**
+		 * Handles click events for the Canvas.
+		 * @param event event click
+		 */
 		canvasClick(event) {
 			let sX = Math.floor(event.clientX / this.squareSize);
 			let sY = Math.floor(event.clientY / this.squareSize);
 
-			let piece = this.game.getPieceBySquare(sX, sY);			
+			let piece = this.game.getPieceBySquare(sX, sY).piece;
 
-			// this.ctx.clearRect(0, 0, this.$refs.canvas.width, this.$refs.canvas.height);
 
-			// if (!piece) {
-				if (this.game.selected) {
-					console.log("asdasds")
-					this.game.selected.posY = sY;
-					this.game.selected.posX = sX;
-				}
-			// }
-			// this.drawBoard();
+			if (this.game.selected) {
+				this.game.initiateMove(this.game.selected, sX, sY);
+			}
+
 			this.game.selected = piece;
-
-
-
-
 
 			this.reDraw();
 

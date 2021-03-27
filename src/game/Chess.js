@@ -68,11 +68,29 @@ class Chess {
     getPieceBySquare(x, y) {
         for (let i = 0; i < this.pieces.length; i++) {
             if (this.pieces[i].posX == x && this.pieces[i].posY == y) {
-                return this.pieces[i];
+                return {piece: this.pieces[i], index: i};
             }
         }
 
         return false;
+    }
+
+    initiateMove(piece, x, y) {
+        // checking if square is occupied
+        let pieceOnSquare = this.getPieceBySquare(x, y);
+
+        if (pieceOnSquare) {
+            // check if player can take
+            if (piece.canTake(pieceOnSquare.piece, x, y)) {
+                piece.move(x, y, true);
+
+                // remove piece from game
+                this.pieces.splice(pieceOnSquare.index, 1);
+            }
+        } 
+        else {
+            piece.move(x, y);
+        }
     }
 }
 
