@@ -2,20 +2,34 @@ import Piece from './Piece';
 
 class Pawn extends Piece {
   /**
-   * @argument x position pawn wants to go to
-   * @argument y position pawn wants to go to
-   * @returns if pawn can take something
+   * @argument allPieces
+   * @returns {Array} Array of objects of all legal moves
    */
-  allPossibleMoves() {
+  allPossibleMoves(allPieces) {
     // direction
     let d = this.side === "w" ? -1 : 1;
     let moves = [];
 
     for (let x = this.posX-1; x <= this.posX+1; x++) {
-      moves.push([x, this.posY + d]);
+      moves.push({x, y: this.posY + d});
     }
 
-    if (!this.hasMoved) moves.push([this.posX, this.posY + (d*2)]);
+    if (!this.hasMoved) moves.push({x: this.posX, y: this.posY + 2*d});
+
+    // remove illegal moves
+    for (let i = 0; i < moves.length; i++) {
+      if (!this.canMove(moves[i].x, moves[i].y)) {
+        moves.splice(i, 1);
+        i--;
+      }
+    }
+
+    // add takes
+    for (let j = 0; j < allPieces.length; j++) {
+      if (this.canTake(allPieces[j], allPieces[j].posX, allPieces[j].posY)) {
+        moves.push({x: allPieces[j].posX, y: allPieces[j].posY, take: true});
+      }
+    }
 
     return moves;
   }
@@ -38,7 +52,7 @@ class Pawn extends Piece {
    * @param {int} y position pawn wants to move to
    * @param {boolean} taking if pawn is taking. 
    */
-  move(x, y, taking) {
+  canMove(x, y, taking) {
     let d = this.side === "w" ? -1 : 1;
     if (taking) {
       this.posX = x;
@@ -49,9 +63,7 @@ class Pawn extends Piece {
     if (this.hasMoved) {
       // rules if pawn has moved
       if (this.posY + d == y && this.posX == x) {
-        this.posX = x;
-        this.posY = y;
-        this.hasMoved = true;
+        return true;
       }
     } else {
       //rules if pawn hasn't yet moved
@@ -59,10 +71,20 @@ class Pawn extends Piece {
         (this.posY + d == y && this.posX == x) || 
         (this.posY + d*2 == y && this.posX == x)
       ) {
-        this.posX = x;
-        this.posY = y;
-        this.hasMoved = true;
+        return true;
       }
+    }
+    return false;
+  }
+
+  /**
+   * 
+   */
+  move(x, y, taking) {
+    if (this.canMove(x, y, taking)) {
+      this.posX = x;
+      this.posY = y;
+      this.hasMoved = true;
     }
   }
 }

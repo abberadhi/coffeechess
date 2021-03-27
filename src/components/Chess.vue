@@ -116,20 +116,36 @@ export default {
 			this.reDraw();
 
 			if (piece) {
-				this.highlightSquare(sX, sY);
+				this.highlightSquare(this.game.selected);
 			}
-
 		},
 
 		/**
 		 * Highlights square
 		 */
-		highlightSquare(x, y) {
+		highlightSquare(piece) {
+			let moves = piece.allPossibleMoves(this.game.getAllPieces());
+
+			for(let i = 0; i < moves.length; i++) {
+				this.ctx.beginPath();
+				if (moves[i].take) {
+					this.ctx.strokeStyle = "red";
+					
+				} else {
+					this.ctx.strokeStyle = "green";
+					this.ctx.lineWidth = 5 / 2;
+				}
+
+				this.ctx.rect(moves[i].x*this.squareSize, moves[i].y*this.squareSize, this.squareSize, this.squareSize);
+				this.ctx.stroke();
+			}
+
 			this.ctx.beginPath();
-			this.ctx.strokeStyle = "green";
-			this.ctx.lineWidth = 5;
-			this.ctx.rect(x*this.squareSize, y*this.squareSize, this.squareSize, this.squareSize);
+			this.ctx.strokeStyle = "gray";
+			this.ctx.rect(piece.posX*this.squareSize, piece.posY*this.squareSize, this.squareSize, this.squareSize);
 			this.ctx.stroke();
+
+
 		}
 	},
 

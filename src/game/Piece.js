@@ -6,6 +6,7 @@ class Piece {
       this.make_base(image);
       this.hasMoved = false;
       this.isClicked = false;
+      this.attacking = [] // all pieces that this piece is attacking
 
     }
 
