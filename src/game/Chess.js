@@ -5,6 +5,7 @@ import Queen from './Queen';
 import King from './King';
 import Pawn from './Pawn';
 
+
 class Chess {
     constructor(turn, userID) {
         this.userID = userID;
@@ -30,7 +31,6 @@ class Chess {
         this.pieces.push(new Knight("wn", "w", 6, 7));
         this.pieces.push(new Knight("bn", "b", 1, 0));
         this.pieces.push(new Knight("bn", "b", 6, 0));
-        
 
         // Rook
         this.pieces.push(new Rook("wr", "w", 0, 7));
@@ -52,14 +52,27 @@ class Chess {
     }
 
     /**
-     * @param ctx canvas instance
+     * Get all pieces on the board
+     * @returns {Array} all pieces
      */
-    drawPieces() {
-        return null
-    }
-
     getAllPieces() {
         return this.pieces;
+    }
+
+    /**
+     * 
+     * @param {int} x
+     * @param {int} y 
+     * @returns {object} piece
+     */
+    getPieceBySquare(x, y) {
+        for (let i = 0; i < this.pieces.length; i++) {
+            if (this.pieces[i].posX == x && this.pieces[i].posY == y) {
+                return this.pieces[i];
+            }
+        }
+
+        return false;
     }
 }
 
