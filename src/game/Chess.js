@@ -52,6 +52,13 @@ class Chess {
     }
 
     /**
+     * Keeps track of whos turn it is
+     */
+    nextPlayerTurn() {
+        this.turn = this.turn == "w" ? "b" : "w";
+    }
+
+    /**
      * Get all pieces on the board
      * @returns {Array} all pieces
      */
@@ -86,10 +93,14 @@ class Chess {
 
                 // remove piece from game
                 this.pieces.splice(pieceOnSquare.index, 1);
+                this.nextPlayerTurn();
             }
         } 
         else {
             piece.move(x, y);
+
+            // next player on move
+            this.nextPlayerTurn();
         }
     }
 }

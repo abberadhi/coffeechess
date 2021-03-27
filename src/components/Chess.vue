@@ -104,20 +104,40 @@ export default {
 			let sX = Math.floor(event.clientX / this.squareSize);
 			let sY = Math.floor(event.clientY / this.squareSize);
 
-			let piece = this.game.getPieceBySquare(sX, sY).piece;
 
 
-			if (this.game.selected) {
-				this.game.initiateMove(this.game.selected, sX, sY);
-			}
-
-			this.game.selected = piece;
-
-			this.reDraw();
-
-			if (piece) {
+			// first click
+			if (!this.game.selected) {
+				let piece = this.game.getPieceBySquare(sX, sY).piece;1
+				if (!piece) return; // return if undefined
+				if (piece.side != this.game.turn) return; // return if wrong side
+				this.game.selected = piece;
 				this.highlightSquare(this.game.selected);
+			} else {
+				// if piece is selected
+				this.game.initiateMove(this.game.selected, sX, sY);
+				this.highlightSquare(this.game.selected);
+				this.game.selected = null;
+				this.reDraw();
 			}
+
+
+
+			// let piece = this.game.getPieceBySquare(sX, sY).piece;1
+
+			// if (this.game.selected) {
+			// 	if (this.game.selected.side != this.game.turn) return;
+			// 	this.game.initiateMove(this.game.selected, sX, sY);
+			// 	this.game.selected = null;
+			// }
+
+			// this.game.selected = piece;
+
+			// this.reDraw();
+
+			// if (piece) {
+			// 	this.highlightSquare(this.game.selected);
+			// }
 		},
 
 		/**
@@ -126,6 +146,7 @@ export default {
 		highlightSquare(piece) {
 			let moves = piece.allPossibleMoves(this.game.getAllPieces());
 
+			// loop through possible moves and highlight the squares
 			for(let i = 0; i < moves.length; i++) {
 				this.ctx.beginPath();
 				if (moves[i].take) {
