@@ -1,3 +1,5 @@
+import Piece from './Piece';
+
 class Pawn extends Piece {
   /**
    * @argument x position pawn wants to go to
@@ -5,7 +7,7 @@ class Pawn extends Piece {
    * @returns if pawn can take something
    */
   canMove(x, y) {
-    return false;
+    return x, y;
   }
 
   /**
@@ -16,6 +18,8 @@ class Pawn extends Piece {
   }
 
   move(x, y) {
-    return false;
+    return x, y;
   }
 }
+
+export default Pawn;

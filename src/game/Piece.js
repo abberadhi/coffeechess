@@ -11,7 +11,7 @@ class Piece {
 
     make_base(img) {
         this.base_image = new Image();
-        this.base_image.src = `img/${img}.png`;
+        this.base_image.src = `./set/${img}.svg`;
     }
 }
 
