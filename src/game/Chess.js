@@ -98,10 +98,7 @@ class Chess {
             }
         } 
         else {
-            piece.move(x, y);
-
-            // next player on move
-            this.nextPlayerTurn();
+            if(piece.move(x, y)) this.nextPlayerTurn();// next player on move            
         }
     }
 }

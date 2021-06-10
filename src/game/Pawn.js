@@ -81,11 +81,15 @@ class Pawn extends Piece {
    * 
    */
   move(x, y, taking) {
-    if (this.canMove(x, y, taking)) {
+    let moved = this.canMove(x, y, taking);
+
+    if (moved) {
       this.posX = x;
       this.posY = y;
       this.hasMoved = true;
     }
+
+    return moved;
   }
 }
 
